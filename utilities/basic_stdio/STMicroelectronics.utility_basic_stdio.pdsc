@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="1.7.15" xs:noNamespaceSchemaLocation="PACK.xsd">
+  <vendor>STMicroelectronics</vendor>
+  <name>utility_basic_stdio</name>
+  <description>Pack with basic stdio redirection utility</description>
+  <url>https://artifactory.st.com/artifactory/mcdc2embsw-mcd-cube2-packs-prod-local/STMicroelectronics.utility_basic_stdio/</url>
+  <supportContact>https://community.st.com/</supportContact>
+  <repository type="git">https://codex.cro.st.com/plugins/git/stm32cube/utilities/basic_trace</repository>
+  <license>LICENSE.md</license>
+  <releases>
+    <release version="0.5.6" date="2024-05-29">
+      Initial version of STMicroelectronics.utility_basic_stdio pack
+    </release>
+  </releases>
+  <keywords>
+    <keyword>STMicroelectronics</keyword>
+    <keyword>ST</keyword>
+    <keyword>STM32</keyword>
+    <keyword>utility</keyword>
+    <keyword>stdout</keyword>
+    <keyword>trace</keyword>
+    <keyword>serial</keyword>
+    <keyword>ITM</keyword>
+    <keyword>UART</keyword>
+  </keywords>
+  <conditions>
+    <condition id="STM32 HAL UART">
+      <description>STMicroelectronics UART HAL Driver as low level component</description>
+      <require Cclass="Device" Cgroup="STM32 HAL" Csub="UART"/>
+    </condition>
+    <condition id="Cortex-M ITM">
+      <description>ARM Cortex-M ITM as low level component</description>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+  </conditions>
+  <components>
+    <component Cclass="Utility" Cgroup="Basic stdio" Cvariant="UART" Cversion="0.5.6" condition="STM32 HAL UART" isDefaultVariant="true">
+      <description>UART-based basic stdio redirection (no configuration)</description>
+      <files>
+        <file category="source" name="uart/stm32_basic_stdio.c"/>
+        <file category="doc" name="README.md"/>
+        <file category="doc" name="CONTRIBUTING.md"/>
+        <file category="doc" name="doc/subbrand-stm32.svg"/>
+        <file category="header" name="stm32_basic_stdio.h"/>
+        <file category="header" name="priv_inc/stm32_basic_stdio_internal.h"/>
+        <file category="source" name="priv_src/stm32_basic_stdio_armcc.c"/>
+      </files>
+    </component>
+    <component Cclass="Utility" Cgroup="Basic stdio" Cvariant="ITM" Cversion="0.5.6" condition="Cortex-M ITM" isDefaultVariant="false">
+      <description>ITM-based basic stdio redirection (no configuration)</description>
+      <files>
+        <file category="source" name="itm/stm32_basic_stdio.c"/>
+        <file category="doc" name="README.md"/>
+        <file category="doc" name="CONTRIBUTING.md"/>
+        <file category="doc" name="doc/subbrand-stm32.svg"/>
+        <file category="header" name="stm32_basic_stdio.h"/>
+        <file category="header" name="priv_inc/stm32_basic_stdio_internal.h"/>
+        <file category="source" name="priv_src/stm32_basic_stdio_armcc.c"/>
+      </files>
+    </component>
+    <component Cclass="Utility" Cgroup="Basic stdio" Cvariant="Custom" Cversion="0.5.6" isDefaultVariant="false">
+      <description>No stdio redirection at all: up to you to implement the services based on the templates</description>
+      <files>
+        <file category="source" name="template/stm32_basic_stdio.c" attr="template" select="alternate implementation"/>
+        <file category="doc" name="README.md"/>
+        <file category="doc" name="CONTRIBUTING.md"/>
+        <file category="doc" name="doc/subbrand-stm32.svg"/>
+        <file category="header" name="stm32_basic_stdio.h"/>
+        <file category="header" name="priv_inc/stm32_basic_stdio_internal.h"/>
+        <file category="source" name="priv_src/stm32_basic_stdio_armcc.c"/>
+      </files>
+    </component>
+  </components>
+</package>

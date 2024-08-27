@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="1.7.15" xs:noNamespaceSchemaLocation="PACK.xsd">
+  <vendor>STMicroelectronics</vendor>
+  <name>button_part_drivers</name>
+  <description>Parts Button driver for STM32 HAL</description>
+  <url>https://artifactory.st.com/artifactory/mcdc2embsw-mcd-cube2-packs-prod-local/STMicroelectronics.button_part_drivers/</url>
+  <repository type="git">https://codex.cro.st.com/plugins/git/stm32cube/parts/button</repository>
+  <supportContact/>
+  <license>LICENSE.md</license>
+  <releases>
+    <release version="0.2.5" date="2024-06-07">
+      Initial version of STMicroelectronics.button_part_drivers
+    </release>
+  </releases>
+  <keywords>
+    <keyword>STMicroelectronics</keyword>
+    <keyword>ST</keyword>
+    <keyword>STM32</keyword>
+    <keyword>BSP</keyword>
+    <keyword>Parts</keyword>
+    <keyword>Drivers</keyword>
+    <keyword>Button</keyword>
+    <keyword>HAL</keyword>
+    <keyword>switch</keyword>
+    <keyword>key</keyword>
+    <keyword>push</keyword>
+    <keyword>knob</keyword>
+    <keyword>dial</keyword>
+    <keyword>toggle</keyword>
+    <keyword>control</keyword>
+  </keywords>
+  <conditions>
+    <condition id="HAL BASICS AND BOARD">
+      <description>STMicroelectronics GPIO HAL Driver</description>
+      <require Cclass="Device" Cgroup="STM32 HAL" Csub="Cortex"/>
+      <require Cclass="Device" Cgroup="STM32 HAL" Csub="GPIO"/>
+      <require Cclass="Device" Cgroup="STM32 HAL" Csub="EXTI"/>
+    </condition>
+  </conditions>
+  <components>
+    <component Cclass="Board Part" Cgroup="Button" Cversion="0.2.5" condition="HAL BASICS AND BOARD">
+      <description>Driver for button based on STM32 HAL</description>
+      <files>
+        <file category="doc" name="README.md"/>
+        <file category="doc" name="doc/subbrand-stm32.svg"/>
+        <file category="doc" name="CONTRIBUTING.md"/>
+        <file category="header" name="button.h"/>
+        <file category="source" name="button.c"/>
+      </files>
+    </component>
+  </components>
+</package>
