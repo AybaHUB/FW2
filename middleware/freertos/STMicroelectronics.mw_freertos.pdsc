@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="1.7.25" xs:noNamespaceSchemaLocation="PACK.xsd">
+  <vendor>STMicroelectronics</vendor>
+  <name>mw_freertos</name>
+  <description>FreeRTOS CMSIS pack</description>
+  <url>https://artifactory.st.com/artifactory/mcdc2embsw-mcd-cube2-packs-prod-local/STMicroelectronics.mw_freertos/</url>
+  <repository type="git">https://codex.cro.st.com/plugins/git/stm32cube/mw/freertos</repository>
+  <license>LICENSE.md</license>
+  <releases>
+    <release date="2024-06-03" version="0.2.0+pack.10.5.1">
+         FreeRTOS pack alpha version based on the 10.5.1 Release
+         ## Main changes
+            - **Updates on code generation and configuration**
+              - Add the FreeRTOS for demonstration with a simple use case (simple view)
+        ## Known Limitations
+        * As an Alpha release it does not implement full features neither fully tested, it may contain bugs.
+    </release>
+    <release date="2024-03-22" version="0.1.0+pack.10.5.1">
+         FreeRTOS pack alpha version based on the 10.5.1 Release
+         ## Main changes
+            - Add dedicated "FreeRTOS" Cgroup for all components
+    </release>
+    <release date="2023-09-14" version="0.0.1+pack.10.5.1">
+         First FreeRTOS pack alpha version based on the 10.5.1 Release
+    </release>
+  </releases>
+  <keywords>
+    <keyword>ST</keyword>
+    <keyword>STMicroelectronics</keyword>
+    <keyword>Cortex M</keyword>
+    <keyword>Middleware</keyword>
+    <keyword>RTOS</keyword>
+    <keyword>FreeRTOS</keyword>
+  </keywords>
+  <conditions>
+    <condition id="GCC Compiler Condition">
+      <description>Combined condition to check for GCC and AC6 compilers</description>
+      <accept Tcompiler="GCC"/>
+      <accept Tcompiler="ARMCC"/>
+    </condition>
+    <!-- Coretx M7 condition -->
+    <condition id="CM7 CM4 IAR Condition">
+      <description>Cortex M7 (newer than r0p1) and CM4 / IAR compiler</description>
+      <accept Dcore="Cortex-M7"/>
+      <accept Dcore="Cortex-M4"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM7 CM4 GCC Condition">
+      <description>Cortex M7 / GCC compiler</description>
+      <accept Dcore="Cortex-M7"/>
+      <accept Dcore="Cortex-M4"/>
+      <require condition="GCC Compiler Condition"/>
+    </condition>
+    <!-- Coretx M0 condition -->
+    <condition id="CM0 IAR Condition">
+      <description>Cortex M0 / IAR compiler</description>
+      <require Dcore="Cortex-M0+"/>
+      <!--accept Dcore="Cortex-M0"-->
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM0 GCC Condition">
+      <description>Cortex M0 / GCC compiler</description>
+      <require Dcore="Cortex-M0+"/>
+      <require condition="GCC Compiler Condition"/>
+    </condition>
+    <!-- Coretx M33 NTZ condition -->
+    <condition id="CM33 TZ Disabled IAR Condition">
+      <description>Cortex M33 TZ Disabled / IAR compiler</description>
+      <require Dcore="Cortex-M33"/>
+      <require Dsecure="TZ-disabled"/>
+      <require Tcompiler="IAR"/>
+    </condition>
+    <condition id="CM33 TZ Disabled GCC Condition">
+      <description>Cortex M33 TZ Disabled / GCC compiler</description>
+      <require Dcore="Cortex-M33"/>
+      <require Dsecure="TZ-disabled"/>
+      <require condition="GCC Compiler Condition"/>
+    </condition>
+    <condition id="FreeRTOS Memory Heap condition">
+      <description> Memory Heap condition </description>
+      <require Cclass="RTOS" Cgroup="FreeRTOS" Csub="MemMang"/>
+    </condition>
+    <condition id="FreeRTOS Init condition">
+      <description>STMicroelectronics FreeRTOS Init</description>
+      <require condition="FreeRTOS Memory Heap condition"/>
+      <require Cclass="RTOS" Cgroup="FreeRTOS" Csub="Core"/>
+      <require Cclass="RTOS" Cgroup="FreeRTOS" Csub="MemMang"/>
+    </condition>
+  </conditions>
+  <!-- This generator is launched if any component referencing this generator by 'id' is selected and the specified <gpdsc> file does not exist -->
+  <generators>
+    <!-- This generator is launched if any component referencing this generator by 'id' is selected and the specified <gpdsc> file does not exist -->
+    <generator id="STM32Cube_CodeGen">
+      <description>ST Microelectronics: STM32 Cube Code Generator for FreeRTOS Pack</description>
+      <exe>
+        <command host="win">.config/gen_code.bat</command>
+        <command host="linux">.config/gen_code.sh</command>
+        <!-- $S = Device Family Pack base folder -->
+        <argument>$S</argument>
+        <!-- D = Device (Dname/Dvariant as configured by environment) -->
+        <argument>$D</argument>
+        <!-- Project path and project name (as configured by environment) -->
+        <argument>$P</argument>
+        <argument>#P</argument>
+        <!-- #name of the gpdsc template contained in this PACK and aligned with GPDSC name-->
+        <argument>mw_freertos_codegen.gpdsc.hbs</argument>
+        <!-- passing the generator name-->
+        <argument>STM32Cube_CodeGen</argument>
+        <argument>$G</argument>
+      </exe>
+      <!-- workingDir></workingDir -->
+      <!-- path is specified either absolute or relative to PDSC or GPDSC file. If not specified it is the project directory configured by the environment -->
+      <gpdsc name="$P/mw_freertos_codegen.gpdsc.gpdsc"/>
+    </generator>
+  </generators>
+  <!-- end of codegen -->
+  <!-- START: STMicroelectronics MW FREERTOS -->
+  <components>
+    <component Cclass="RTOS" Cgroup="FreeRTOS" Csub="Core" Cversion="10.5.1" condition="FreeRTOS Memory Heap condition" maxInstances="1">
+      <description>FreeRTOS Core component </description>
+      <files>
+        <!-- common files -->
+        <file category="doc" name="st_readme.txt"/>
+        <file category="doc" name="README.md"/>
+        <file category="doc" name="History.txt"/>
+        <file category="source" name="croutine.c"/>
+        <file category="source" name="event_groups.c"/>
+        <file category="source" name="list.c"/>
+        <file category="source" name="queue.c"/>
+        <file category="source" name="tasks.c"/>
+        <file category="source" name="timers.c"/>
+        <file category="source" name="timers.c"/>
+        <file category="include" name="include/"/>
+        <!-- CM33 NTZ portable IAR files -->
+        <file category="source" name="portable/IAR/ARM_CM33_NTZ/non_secure/port.c" condition="CM33 TZ Disabled IAR Condition"/>
+        <file category="source" name="portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s" condition="CM33 TZ Disabled IAR Condition"/>
+        <file category="include" name="portable/IAR/ARM_CM33_NTZ/non_secure/" condition="CM33 TZ Disabled IAR Condition"/>
+        <!-- CM33 NTZ portable GCC/AC6 files -->
+        <file category="source" name="portable/GCC/ARM_CM33_NTZ/non_secure/port.c" condition="CM33 TZ Disabled GCC Condition"/>
+        <file category="source" name="portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c" condition="CM33 TZ Disabled GCC Condition"/>
+        <file category="include" name="portable/GCC/ARM_CM33_NTZ/non_secure/" condition="CM33 TZ Disabled GCC Condition"/>
+        <!-- CM7/CM4 portable IAR files -->
+        <file category="source" name="portable/IAR/ARM_CM4F/port.c" condition="CM7 CM4 IAR Condition"/>
+        <file category="source" name="portable/IAR/ARM_CM4F/portasm.s" condition="CM7 CM4 IAR Condition"/>
+        <file category="include" name="portable/IAR/ARM_CM4F/" condition="CM7 CM4 IAR Condition"/>
+        <!-- CM7/CM4 portable GCC files -->
+        <file category="source" name="portable/GCC/ARM_CM4F/port.c" condition="CM7 CM4 GCC Condition"/>
+        <file category="include" name="portable/GCC/ARM_CM4F/" condition="CM7 CM4 GCC Condition"/>
+        <!-- CM0 portable IAR files -->
+        <file category="source" name="portable/IAR/ARM_CM0/port.c" condition="CM0 IAR Condition"/>
+        <file category="source" name="portable/IAR/ARM_CM0/portasm.s" condition="CM0 IAR Condition"/>
+        <file category="include" name="portable/IAR/ARM_CM0/" condition="CM0 IAR Condition"/>
+        <!-- CM0 portable GCC files -->
+        <file category="source" name="portable/GCC/ARM_CM0/port.c" condition="CM0 GCC Condition"/>
+        <file category="include" name="portable/GCC/ARM_CM0/" condition="CM0 GCC Condition"/>
+      </files>
+    </component>
+    <!--<components> -->
+    <!-- START: STMicroelectronics MW FreeRTOS -->
+    <!-- Stream Buffer Component -->
+    <component Cclass="RTOS" Cgroup="FreeRTOS" Csub="Stream Buffer" Cversion="10.5.1" maxInstances="1" condition="FreeRTOS Memory Heap condition">
+      <description>FreeRTOS Stream Buffer component </description>
+      <files>
+        <file category="source" name="stream_buffer.c"/>
+        <file category="include" name="include/"/>
+      </files>
+    </component>
+    <!-- Memory Heap variants -->
+    <component Cclass="RTOS" Cgroup="FreeRTOS" Csub="MemMang" Cvariant="Heap_1" Cversion="10.5.1" maxInstances="1">
+      <description>FreeRTOS  Memory Heap (Heap 1) component </description>
+      <files>
+        <file category="source" name="portable/MemMang/heap_1.c"/>
+        <file category="include" name="include/"/>
+      </files>
+    </component>
+    <component Cclass="RTOS" Cgroup="FreeRTOS" Csub="MemMang" Cvariant="Heap_2" Cversion="10.5.1" maxInstances="1">
+      <description>FreeRTOS  Memory Heap (Heap 2) component </description>
+      <files>
+        <file category="source" name="portable/MemMang/heap_2.c"/>
+        <file category="include" name="include/"/>
+      </files>
+    </component>
+    <component Cclass="RTOS" Cgroup="FreeRTOS" Csub="MemMang" Cvariant="Heap_3" Cversion="10.5.1" maxInstances="1">
+      <description>FreeRTOS  Memory Heap (Heap 3) component </description>
+      <files>
+        <file category="source" name="portable/MemMang/heap_3.c"/>
+        <file category="include" name="include/"/>
+      </files>
+    </component>
+    <component Cclass="RTOS" Cgroup="FreeRTOS" Csub="MemMang" Cvariant="Heap_4" Cversion="10.5.1" maxInstances="1">
+      <description>FreeRTOS  Memory Heap (Heap 4) component </description>
+      <files>
+        <file category="source" name="portable/MemMang/heap_4.c"/>
+        <file category="include" name="include/"/>
+      </files>
+    </component>
+    <component Cclass="RTOS" Cgroup="FreeRTOS" Csub="MemMang" Cvariant="Heap_5" Cversion="10.5.1" maxInstances="1">
+      <description>FreeRTOS  Memory Heap (Heap 5) component </description>
+      <files>
+        <file category="source" name="portable/MemMang/heap_5.c"/>
+        <file category="include" name="include/"/>
+      </files>
+    </component>
+    <!--</components> -->
+    <!-- END: STMicroelectronics MW FREERTOS -->
+    <!-- START: STMicroelectronics MW FREERTOS CODE GEN -->
+    <component generator="STM32Cube_CodeGen" Cclass="RTOS" Cgroup="FreeRTOS Code Gen" Csub="Generated Code" Cversion="0.1.0" condition="FreeRTOS Init condition">
+      <description>Temporary component that will store all the resulting generated code</description>
+      <files>
+        <file category="genAsset" name=".config/gen_code.bat"/>
+        <file category="genAsset" name=".config/gen_code.sh"/>
+        <file category="genAsset" name=".config/mw_freertos_codegen.gpdsc.hbs"/>
+      </files>
+    </component>
+    <component generator="STM32Cube_CodeGen" Cclass="RTOS" Cgroup="FreeRTOS Code Gen" Csub="Init" Cversion="0.0.1" condition="FreeRTOS Init condition" maxInstances="1">
+      <description>Init Code Generation for FreeRTOS MW </description>
+      <files>
+        <file category="genAsset" name=".config/template/FreeRTOSConfig.h.hbs"/>
+        <file category="genAsset" name=".config/freertos_config_parameters.json"/>
+      </files>
+    </component>
+  </components>
+</package>

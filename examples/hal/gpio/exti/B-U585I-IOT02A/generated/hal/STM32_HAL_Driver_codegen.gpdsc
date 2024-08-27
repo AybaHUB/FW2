@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="1.7.22" xs:noNamespaceSchemaLocation="PACK.xsd">
+  <vendor>STMicroelectronics</vendor>
+  <name>STM32Cube_CodeGen</name>
+  <description>STM32Cube generated target folder description</description>
+  <components>
+    <component Cclass="Device" Cgroup="STM32 HAL Code Gen" Csub="Generated Code" Cversion="0.1.0">
+      <description>Generated component that will store all the resulting generated code</description>
+      <files>
+        <file category="header" name="stm32u5xx_hal_conf.h" />
+        <file category="header" name="mx_hal_def.h" />
+        <file category="source" name="mx_gpio_default.c" />
+        <file category="header" name="mx_gpio_default.h" />
+        <file category="other" name="HAL_Driver_codegen.gpdsc" />
+        <file category="source" name="mx_rcc.c" />
+        <file category="header" name="mx_rcc.h" />
+        <file category="source" name="mx_system.c" />
+        <file category="header" name="mx_system.h" />
+        <file category="source" name="mx_interrupts.c" />
+        <file category="header" name="mx_interrupts.h" />
+        <file category="source" name="mx_usart1.c" />
+        <file category="header" name="mx_usart1.h" />
+        <file category="header" name="mx_def.h" />
+      </files>
+    </component>
+  </components>
+</package>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="1.7.15" xs:noNamespaceSchemaLocation="PACK.xsd">
+  <vendor>STMicroelectronics</vendor>
+  <name>example_hal_gpio_exti</name>
+  <description>Example use of an external interrupt line connected to GPIO</description>
+  <url>https://artifactory.st.com/artifactory/mcdc2embsw-mcd-cube2-packs-prod-local/STMicroelectronics.example_hal_gpio_exti/</url>
+  <supportContact/>
+  <license>LICENSE.md</license>
+  <releases>
+    <release version="0.9.1" date="2024-06-24">
+      Initial version of STMicroelectronics.example_hal_gpio_exti pack
+    </release>
+  </releases>
+  <keywords>
+    <keyword>STMicroelectronics</keyword>
+    <keyword>ST</keyword>
+    <keyword>STM32</keyword>
+    <keyword>examples</keyword>
+    <keyword>HAL</keyword>
+    <keyword>GPIO</keyword>
+    <keyword>EXTI</keyword>
+    <keyword>IRQ</keyword>
+  </keywords>
+  <conditions>
+    <condition id="application_dependencies">
+      <description>Component requirement for the example</description>
+      <require Cclass="Board Part" Cgroup="LED" Csub="Config"/>
+      <require Cclass="Device" Cgroup="STM32 HAL Code Gen" Csub="GPIO Init"/>
+      <require Cclass="Device" Cgroup="STM32 HAL Code Gen" Csub="System Init"/>
+      <require Cclass="Device" Cgroup="STM32 HAL Code Gen" Csub="UART Init"/>
+      <require Cclass="Device" Cgroup="STM32 HAL" Csub="EXTI"/>
+      <require Cclass="Device" Cgroup="Startup"/>
+      <require Cclass="Utility" Cgroup="Basic stdio" Cvariant="UART"/>
+    </condition>
+  </conditions>
+  <components>
+    <component Cclass="Application" Cgroup="example_hal" Csub="gpio" Cvariant="exti" Cversion="0.9.1" condition="application_dependencies">
+      <description>Example component files</description>
+      <files>
+        <file category="doc" name="README.md"/>
+        <file category="doc" name="CONTRIBUTING.md"/>
+        <file category="doc" name="doc/subbrand-stm32.svg"/>
+        <file category="doc" name="doc/go_further_with-STM32.svg"/>
+        <file category="doc" name="doc/debug_with-Troubleshooting.svg"/>
+        <file category="doc" name="doc/configure_with-ConfigurationMa.svg"/>
+        <file category="doc" name="doc/read_the-UM.svg"/>
+        <file category="doc" name="doc/example_hal_gpio_exti_setup.png"/>
+        <file category="header" name="application/example.h"/>
+        <file category="source" name="application/example.c"/>
+        <file category="header" name="application/main.h"/>
+        <file category="source" name="application/main.c"/>
+      </files>
+    </component>
+  </components>
+</package>
